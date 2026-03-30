@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BaseSwap — Base Chain DEX Guide: How to Swap, Provide Liquidity, BSX Token &amp; Farms (2026)</title>
+  <meta name="description" content="Complete BaseSwap guide (2026): how to swap tokens on BaseSwap, provide liquidity and earn fees, BSX and xBSX token mechanics, yield farms, Base Chain overview, how BaseSwap compares to other Base DEXs, security, and a deep FAQ for traders and LPs.">
+  <meta name="author" content="Crypto Finance Experts">
+  <link rel="canonical" href="https://baseswap-guide.example.com/">
+  <link rel="icon" type="image/png" href="BASE.png">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://baseswap-guide.example.com/">
+  <meta property="og:title" content="BaseSwap — Base Chain DEX Guide: Swaps, Liquidity &amp; BSX Token (2026)">
+  <meta property="og:description" content="Practical BaseSwap guide: token swaps on Base Chain, liquidity pools, BSX and xBSX tokens, yield farms, security, and comparison with other Base DEXs.">
+  <meta property="og:image" content="cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BaseSwap — Base Chain DEX Guide (2026)">
+  <meta name="twitter:description" content="How BaseSwap works on Base Chain, BSX token, liquidity pools, yield farms, and how to get started in 2026.">
+
+  <style>
+    :root {
+      --b:    #0052FF;
+      --b2:   #0043CC;
+      --b3:   #003399;
+      --ba:   #4D8FFF;
+      --bb:   #99C0FF;
+      --bc:   #CCE0FF;
+
+      --ink:   #F0F6FF;
+      --sub:   #CCE0FF;
+      --muted: #94A3B8;
+      --dim:   #64748B;
+
+      --bg:    #030510;
+      --card:  rgba(255,255,255,.028);
+      --line:  rgba(255,255,255,.07);
+      --lb:    rgba(0,82,255,.14);
+
+      --ok:   #34D399;
+      --warn: #FBBF24;
+      --err:  #F87171;
+
+      --r:  12px;
+      --rl: 18px;
+      --gap: 1.2rem;
+      --sh: 0 8px 28px rgba(0,0,0,.60);
+      --shb: 0 4px 24px rgba(0,82,255,.14);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+    html { scroll-behavior: smooth }
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 900px 520px at 0%   0%,  rgba(0,67,204,.12), transparent 55%),
+        radial-gradient(ellipse 700px 400px at 100% 8%,  rgba(0,82,255,.07), transparent 50%),
+        radial-gradient(ellipse 600px 360px at 50%  98%, rgba(0,51,153,.08), transparent 55%);
+      color: var(--muted);
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    a { color: var(--ba); text-decoration: none }
+    a:hover { text-decoration: underline }
+    img { max-width: 100%; height: auto; display: block }
+    strong { color: #CCE0FF; font-weight: 600 }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 1.4rem }
+
+    h1,h2,h3,h4 { color: var(--ink); line-height: 1.25 }
+    h1 { font-size: clamp(2rem,5vw,3.1rem); font-weight: 800; letter-spacing: -.4px }
+    h2 { font-size: clamp(1.25rem,2.5vw,1.75rem); font-weight: 700; margin-top: 1.8rem; padding-top: .7rem; border-top: 1px solid var(--line) }
+    h3 { font-size: 1.08rem; font-weight: 700; color: var(--sub) }
+    p,li,td,th { font-size: 1rem; line-height: 1.75 }
+    .lead { font-size: 1.08rem; color: #99C0FF }
+
+    /* HERO */
+    header.hero {
+      padding: clamp(2.5rem,6vw,5rem) 0 clamp(2rem,4vw,3.5rem);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-card {
+      background: rgba(0,67,204,.05);
+      border: 1px solid var(--lb);
+      border-radius: var(--rl);
+      padding: clamp(1.4rem,3.5vw,2.4rem);
+      box-shadow: var(--sh), var(--shb);
+      position: relative; overflow: hidden;
+    }
+    .hero-card::after {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(77,143,255,.55), transparent);
+    }
+
+    .brand-row { display: flex; align-items: center; gap: .9rem; margin-bottom: 1rem }
+    .brand-logo {
+      width: 54px; height: 54px; border-radius: 13px;
+      border: 1px solid rgba(0,82,255,.28);
+      background: rgba(0,67,204,.10);
+      padding: .3rem; object-fit: contain;
+      box-shadow: 0 4px 14px rgba(0,82,255,.22);
+      flex: 0 0 auto;
+    }
+    .brand-label { color: var(--dim); font-size: .85rem; font-weight: 600; text-transform: uppercase; letter-spacing: .4px }
+    .brand-sub   { color: var(--muted); font-size: .85rem }
+
+    /* CTA */
+    .cta-center { display: flex; justify-content: center; margin-top: 2rem }
+    .cta {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: linear-gradient(135deg, #4D8FFF 0%, #0052FF 42%, #0043CC 76%, #003399 100%);
+      color: #fff;
+      padding: 1.2rem 3rem;
+      border-radius: 16px;
+      font-weight: 900; font-size: 1.15rem; letter-spacing: .15px;
+      box-shadow:
+        0 0 0 1px rgba(0,82,255,.26),
+        0 0 30px rgba(0,82,255,.32),
+        0 8px 22px rgba(0,67,204,.28),
+        0 20px 48px rgba(0,51,153,.22);
+      border: none; cursor: pointer; text-decoration: none;
+      transition: transform .18s, box-shadow .18s, filter .18s;
+    }
+    .cta:hover {
+      transform: translateY(-3px) scale(1.025); filter: brightness(1.08);
+      color: #fff; text-decoration: none;
+      box-shadow:
+        0 0 0 1px rgba(0,82,255,.42),
+        0 0 44px rgba(0,82,255,.46),
+        0 10px 28px rgba(0,67,204,.38),
+        0 26px 58px rgba(0,51,153,.30);
+    }
+
+    /* NOTE */
+    .note {
+      border-left: 3px solid var(--ba);
+      padding: .8rem 1rem;
+      background: rgba(0,67,204,.07);
+      border-radius: 0 9px 9px 0;
+      color: var(--sub); margin-top: 1rem;
+    }
+
+    /* STEPS */
+    section.step-guide {
+      padding: clamp(2rem,5vw,3.5rem) 0;
+      border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    }
+    .steps { display: grid; gap: var(--gap); grid-template-columns: 1fr }
+    .step {
+      background: var(--card); border: 1px solid var(--line);
+      border-top: 2px solid rgba(0,82,255,.30); border-radius: var(--r);
+      padding: 1.25rem; box-shadow: var(--sh); transition: transform .18s, box-shadow .18s;
+    }
+    .step:hover { transform: translateY(-3px); box-shadow: var(--sh), var(--shb) }
+    .step .icon {
+      width: 44px; height: 44px; border-radius: 9px;
+      display: inline-grid; place-items: center;
+      background: rgba(0,67,204,.12); margin-bottom: .65rem;
+      font-weight: 800; font-size: .95rem; color: var(--ba);
+      border: 1px solid rgba(0,82,255,.24);
+    }
+
+    /* CARD */
+    main { padding-top: .5rem }
+    main .card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--r); padding: 1.5rem; margin: 1.2rem 0; box-shadow: var(--sh);
+    }
+    main .card > h2:first-child { margin-top: 0; border-top: none; padding-top: 0 }
+
+    /* TOC */
+    .toc { border: 1px solid var(--lb); background: rgba(0,67,204,.05); border-radius: var(--r); padding: 1.1rem 1.3rem }
+    .toc strong { color: var(--ink) }
+    .toc ul { margin: .5rem 0 0; padding-left: 1.1rem }
+    .toc li { margin: .28rem 0; font-size: .96rem }
+    .toc a { font-weight: 600 }
+
+    /* GRID */
+    .callout-grid { display: grid; gap: var(--gap); grid-template-columns: 1fr; margin-top: .8rem }
+    .mini { background: rgba(255,255,255,.02); border: 1px solid var(--line); border-radius: var(--r); padding: 1rem }
+    .mini h3 { margin-bottom: .35rem }
+    .kpi-badges { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .55rem }
+    .kpi-badges span {
+      border: 1px solid rgba(0,82,255,.22); background: rgba(0,67,204,.09);
+      color: var(--sub); padding: .26rem .54rem;
+      border-radius: 999px; font-size: .87rem; font-weight: 600;
+    }
+
+    /* CHAIN BADGES */
+    .chain-grid { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: .8rem }
+    .chain {
+      background: rgba(255,255,255,.03); border: 1px solid var(--line);
+      border-radius: 8px; padding: .38rem .75rem;
+      font-size: .9rem; font-weight: 600; color: #CBD5E1;
+    }
+
+    /* TOKO BARS */
+    .toko-bar { display: flex; flex-direction: column; gap: .6rem; margin-top: 1rem }
+    .toko-row { display: flex; align-items: center; gap: .85rem }
+    .toko-label { min-width: 210px; font-size: .92rem; color: #CCE0FF; font-weight: 600 }
+    .toko-track { flex: 1; height: 8px; background: rgba(255,255,255,.07); border-radius: 999px; overflow: hidden }
+    .toko-fill  { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--ba), var(--b)) }
+    .toko-val   { min-width: 60px; text-align: right; font-size: .9rem; font-weight: 700; color: var(--ba) }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; border-radius: var(--r); border: 1px solid var(--line) }
+    table { width: 100%; border-collapse: collapse; min-width: 480px }
+    th,td { padding: .8rem .95rem; border-bottom: 1px solid var(--line); text-align: left }
+    th { background: rgba(0,67,204,.07); color: var(--ink); font-weight: 700; font-size: .93rem }
+    tr.hi { background: rgba(0,67,204,.04) }
+    tr:hover td { background: rgba(255,255,255,.018) }
+    tr:last-child td { border-bottom: none }
+    .ok { color: var(--ok) } .warn { color: var(--warn) } .err { color: var(--err) }
+
+    /* EEAT */
+    .eeat { background: var(--card); border: 1px solid var(--lb); border-radius: var(--r); padding: 1.5rem; box-shadow: var(--sh) }
+    .eeat > h2:first-child { margin-top: 0; border-top: none; padding-top: 0 }
+
+    /* FAQ */
+    .faq-item { border-bottom: 1px solid var(--line); padding: .9rem 0 }
+    .faq-item:last-child { border-bottom: none }
+    .faq-button { all: unset; display: flex; justify-content: space-between; align-items: flex-start; width: 100%; cursor: pointer; gap: 1rem }
+    .faq-button:focus-visible { outline: 2px solid var(--b); border-radius: 4px }
+    .faq-button h3 { margin: 0; font-weight: 700; font-size: 1rem; line-height: 1.4 }
+    .faq-content { max-height: 0; overflow: hidden; transition: max-height .26s ease }
+    .faq-content.open { padding-top: .65rem }
+    .faq-plus { font-weight: 800; font-size: 1.35rem; color: var(--ba); flex: 0 0 auto; line-height: 1; transition: transform .2s }
+    .faq-button[aria-expanded="true"] .faq-plus { transform: rotate(45deg) }
+
+    @media(min-width:860px){
+      .steps { grid-template-columns: repeat(4,1fr) }
+      .callout-grid { grid-template-columns: 1fr 1fr }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero" role="banner">
+  <div class="container">
+    <div class="hero-card">
+      <div class="brand-row">
+        <img class="brand-logo" src="BASE.png" alt="BaseSwap logo">
+        <div>
+          <div class="brand-label">Complete DEX Guide</div>
+          <div class="brand-sub">Base Chain · Token Swaps · Liquidity Pools · BSX Token · xBSX · Yield Farms</div>
+        </div>
+      </div>
+
+      <h1>BaseSwap</h1>
+      <p class="lead" style="margin-top:.7rem">
+        The complete guide to <strong>BaseSwap</strong> — the pioneering decentralised exchange
+        native to <strong>Base Chain</strong>, Coinbase's Ethereum Layer 2 rollup.
+        Understand how BaseSwap's <strong>AMM liquidity pools</strong> work,
+        how to <strong>swap tokens</strong> on Base at ultra-low fees,
+        how to <strong>provide liquidity</strong> and earn trading fees,
+        how the <strong>BSX governance token</strong> and
+        <strong>xBSX revenue-share token</strong> work together,
+        how <strong>yield farms</strong> amplify LP returns,
+        and why Base Chain's combination of Coinbase infrastructure
+        and Ethereum security makes it one of the fastest-growing L2 ecosystems.
+      </p>
+
+      <div class="cta-center">
+        <a href="#" class="cta" aria-label="Open BaseSwap App">
+          <span>⇌</span> Launch BaseSwap
+        </a>
+      </div>
+
+      <div class="note">
+        <strong>Why Base Chain and BaseSwap:</strong> Base combines Ethereum's security
+        with transaction costs 10–100× cheaper than mainnet.
+        BaseSwap was the first major DEX to launch on Base, capturing early liquidity
+        and establishing itself as the go-to swap interface for the Base ecosystem
+        before Uniswap and other incumbents deployed their own Base instances.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- STEPS -->
+<section class="step-guide" aria-labelledby="how-works">
+  <div class="container">
+    <h2 id="how-works" style="margin-top:0;border-top:none;padding-top:0">
+      How BaseSwap Works: Bridge → Connect → Swap or LP → Earn
+    </h2>
+    <div class="steps" role="list">
+      <article class="step" role="listitem">
+        <div class="icon">01</div>
+        <h3>Bridge assets to Base Chain</h3>
+        <p>BaseSwap lives on Base — Coinbase's Layer 2. Bridge ETH or other assets from Ethereum mainnet using the official Base bridge or a cross-chain aggregator. ETH is the primary gas token on Base and the main trading pair.</p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">02</div>
+        <h3>Connect wallet to BaseSwap</h3>
+        <p>Switch your wallet to the Base network and connect to BaseSwap. MetaMask, Coinbase Wallet, and any EVM-compatible wallet supports Base. Add Base as a custom network or use Chainlist for one-click setup.</p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">03</div>
+        <h3>Swap tokens or add liquidity</h3>
+        <p>Use the Swap interface to exchange tokens at the current AMM price. Or add liquidity to any trading pair to earn a share of every trade that routes through your pool — paid in the tokens of the pair.</p>
+      </article>
+      <article class="step" role="listitem">
+        <div class="icon">04</div>
+        <h3>Farm BSX rewards on top of LP fees</h3>
+        <p>Stake your LP tokens in BaseSwap's yield farms to earn additional BSX token emissions on top of your trading fee income. Convert BSX to xBSX for a share of BaseSwap's protocol revenue — compounding your yield stack.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="container" role="main">
+
+  <!-- TOC -->
+  <section class="card toc" aria-label="Table of Contents">
+    <strong>On this page — BaseSwap:</strong>
+    <ul>
+      <li><a href="#overview">What is BaseSwap and Base Chain — the ecosystem context</a></li>
+      <li><a href="#amm">BaseSwap AMM: how liquidity pools and pricing work</a></li>
+      <li><a href="#swapping">How to swap tokens on BaseSwap: step-by-step</a></li>
+      <li><a href="#liquidity">Providing liquidity on BaseSwap: fees, IL, and mechanics</a></li>
+      <li><a href="#bsx">BSX token: utility, emissions, and governance</a></li>
+      <li><a href="#xbsx">xBSX: revenue-share staking and how it generates yield</a></li>
+      <li><a href="#farms">Yield farms: amplifying LP returns with BSX emissions</a></li>
+      <li><a href="#base-chain">Base Chain overview: why it matters for DeFi</a></li>
+      <li><a href="#safety">BaseSwap security and DeFi risks</a></li>
+      <li><a href="#comparison">BaseSwap vs Uniswap on Base vs Aerodrome: Base DEX comparison</a></li>
+      <li><a href="#best-practices">Best practices for BaseSwap traders and LPs</a></li>
+      <li><a href="#troubleshooting">Troubleshooting: swap failures, missing LP tokens, farm issues</a></li>
+      <li><a href="#eeat">Authoritative sources &amp; references</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="card" id="overview">
+    <h2>What Is BaseSwap and the Base Chain Ecosystem Context</h2>
+    <p>
+      <strong>BaseSwap</strong> is a decentralised exchange (DEX) and yield platform
+      built natively on <strong>Base</strong> — the Ethereum Layer 2 rollup developed
+      by Coinbase using the OP Stack (the same technology that powers Optimism).
+      BaseSwap launched in the early days of Base Chain's public availability,
+      establishing itself as the ecosystem's leading native DEX before larger protocols
+      deployed their own Base instances.
+    </p>
+    <p>
+      As a native Base application, BaseSwap benefits from the chain's core advantages:
+      Ethereum-level security through the rollup architecture, transaction fees a fraction
+      of mainnet cost, and access to Coinbase's massive retail user base as a natural
+      onramp for new DeFi participants who may have heard about Base through Coinbase's
+      consumer products.
+    </p>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>For Base Chain newcomers</h3>
+        <p style="color:var(--muted)">BaseSwap is the most straightforward entry point into Base Chain DeFi. Swap ETH for any Base token, add liquidity to earn passive income, and stake LP tokens for additional BSX rewards — all with sub-cent transaction fees and familiar EVM tooling.</p>
+        <div class="kpi-badges"><span>Sub-cent gas</span><span>EVM compatible</span><span>Familiar interface</span></div>
+      </div>
+      <div class="mini">
+        <h3>For experienced DeFi users</h3>
+        <p style="color:var(--muted)">BaseSwap's BSX/xBSX dual-token model, farm APR opportunities in early Base ecosystem pools, and first-mover liquidity depth make it competitive against Uniswap V3 and the newer ve(3,3) DEXs on Base for specific token pairs and strategies.</p>
+        <div class="kpi-badges"><span>BSX/xBSX model</span><span>Farm APRs</span><span>Deep liquidity</span></div>
+      </div>
+      <div class="mini">
+        <h3>For liquidity providers</h3>
+        <p style="color:var(--muted)">Earn trading fees from BaseSwap's swap volume plus BSX token emissions from yield farms. The dual revenue stream — fees plus emissions — makes BaseSwap pools competitive with both Uniswap V3 concentrated positions and ve-style DEXs on Base.</p>
+        <div class="kpi-badges"><span>Fees + emissions</span><span>LP tokens</span><span>Dual revenue</span></div>
+      </div>
+      <div class="mini">
+        <h3>For BSX/xBSX holders</h3>
+        <p style="color:var(--muted)">BSX can be converted to xBSX — a non-transferable staked position that earns a share of BaseSwap's protocol revenue. xBSX holders receive real yield from the DEX's trading activity, aligning long-term token holders with the platform's success.</p>
+        <div class="kpi-badges"><span>Protocol revenue</span><span>Real yield</span><span>xBSX staking</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMM -->
+  <section class="card" id="amm">
+    <h2>BaseSwap AMM: How Liquidity Pools and Pricing Work</h2>
+    <p>
+      BaseSwap uses an <strong>automated market maker (AMM)</strong> model derived from
+      Uniswap V2's constant product formula — the same mechanism that powers the majority
+      of DeFi trading activity. Understanding how it works helps traders predict pricing
+      and helps LPs understand their fee income and impermanent loss exposure.
+    </p>
+
+    <div class="table-wrap">
+      <table aria-label="AMM mechanics">
+        <thead>
+          <tr><th>Concept</th><th>How it works on BaseSwap</th><th>Practical implication</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Constant product (x·y=k)</td>
+            <td>Each pool maintains a fixed product of the two token reserves — price adjusts automatically as trades occur</td>
+            <td>Large trades relative to pool size cause significant price impact (slippage)</td>
+          </tr>
+          <tr>
+            <td>Trading fees</td>
+            <td>0.25% of each swap is charged — split between LPs (0.17%) and the protocol/BSX holders (0.08%)</td>
+            <td>LPs earn continuously from every trade routing through their pool</td>
+          </tr>
+          <tr class="hi">
+            <td>LP tokens</td>
+            <td>When you add liquidity, you receive LP tokens representing your share of the pool</td>
+            <td>LP tokens are needed to stake in farms and to withdraw your share of the pool</td>
+          </tr>
+          <tr>
+            <td>Price discovery</td>
+            <td>Arbitrageurs keep BaseSwap prices aligned with other markets by profiting from price discrepancies</td>
+            <td>Prices on BaseSwap track market prices automatically — no manual updates needed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>BaseSwap V2 vs V3:</strong> BaseSwap operates both a V2-style AMM
+      (full-range liquidity, simpler LP experience) and a concentrated liquidity V3-style AMM
+      (capital-efficient but requires active position management).
+      New LPs should start with V2-style pools — the mechanics are simpler
+      and IL risk is more predictable. V3 is better suited to experienced LPs
+      comfortable with range management.
+    </div>
+  </section>
+
+  <!-- SWAPPING -->
+  <section class="card" id="swapping">
+    <h2>How to Swap Tokens on BaseSwap: Step-by-Step</h2>
+    <ol style="padding-left:1.3rem">
+      <li style="margin-bottom:.6rem"><strong>Add Base network to your wallet</strong> — go to Chainlist.org and search "Base" for one-click network addition, or manually add: Network Name: Base, RPC: https://mainnet.base.org, Chain ID: 8453, Symbol: ETH.</li>
+      <li style="margin-bottom:.6rem"><strong>Bridge ETH to Base</strong> — use the official Base bridge (bridge.base.org) to transfer ETH from Ethereum mainnet to Base. Bridging takes ~20 minutes. Alternatively use a cross-chain aggregator (Bungee, Squid) for faster routes.</li>
+      <li style="margin-bottom:.6rem"><strong>Navigate to the official BaseSwap app</strong> — use a bookmarked URL. Verify the domain before connecting your wallet.</li>
+      <li style="margin-bottom:.6rem"><strong>Connect your wallet</strong> — confirm you're on the Base network (Chain ID 8453). The interface should show "Base" in the network indicator.</li>
+      <li style="margin-bottom:.6rem"><strong>Select tokens to swap</strong> — choose the token you're selling (From) and the token you're buying (To). For new tokens, paste the contract address to add them.</li>
+      <li style="margin-bottom:.6rem"><strong>Enter amount and review the quote</strong> — check the output amount, price impact, minimum received (after slippage), and the estimated fee. Reject any swap with price impact above 3–5% unless you're certain of the pool depth.</li>
+      <li style="margin-bottom:.6rem"><strong>Set slippage tolerance</strong> — 0.5% works for major token pairs; 1–3% for lower-liquidity tokens. Auto slippage is available for most standard pairs.</li>
+      <li><strong>Confirm the swap</strong> — approve (first-time use of a token) then confirm the swap transaction. On Base, transactions typically confirm in 2 seconds at sub-cent gas cost.</li>
+    </ol>
+
+    <div class="note">
+      <strong>Base gas is minimal but non-zero:</strong> Keep a small ETH balance on Base
+      for gas — transactions cost fractions of a cent but do require ETH.
+      If you bridge all your ETH into another token immediately, you'll have no gas
+      for future transactions. Always maintain a small ETH buffer on Base.
+    </div>
+  </section>
+
+  <!-- LIQUIDITY -->
+  <section class="card" id="liquidity">
+    <h2>Providing Liquidity on BaseSwap: Trading Fees, Impermanent Loss, and Mechanics</h2>
+    <p>
+      Adding liquidity to BaseSwap pools earns you a share of every swap fee generated
+      by that trading pair — proportional to your share of the pool.
+      With Base's low gas costs, rebalancing and managing LP positions is far more
+      practical than on Ethereum mainnet.
+    </p>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>Fee income</h3>
+        <p style="color:var(--muted)">LPs earn 0.17% of every swap routed through their pool. On high-volume pairs (ETH/USDC, ETH/BSX), this generates meaningful yield. Fee income accumulates directly into the pool — your LP tokens' redemption value grows with every trade, no claiming required.</p>
+        <div class="kpi-badges"><span>0.17% per swap</span><span>Auto-compounding</span><span>Volume-dependent</span></div>
+      </div>
+      <div class="mini">
+        <h3>Impermanent loss</h3>
+        <p style="color:var(--muted)">When the price ratio between your two pooled tokens changes, you incur impermanent loss relative to simply holding both tokens. IL is highest for volatile token pairs and lowest for stable pairs (USDC/USDT). IL becomes permanent when you withdraw — it's only "impermanent" if the ratio returns to your entry point.</p>
+        <div class="kpi-badges"><span>Price divergence risk</span><span>Stable pairs safest</span><span>Permanent on exit</span></div>
+      </div>
+    </div>
+
+    <div class="table-wrap" style="margin-top:1rem">
+      <table aria-label="LP pool selection guide">
+        <thead>
+          <tr><th>Pool type</th><th>Examples</th><th>IL risk</th><th>Fee potential</th><th>Best for</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Stable pairs</td>
+            <td>USDC/DAI, USDC/USDT</td>
+            <td class="ok">Very Low</td>
+            <td class="warn">Low (tight spreads)</td>
+            <td>Capital preservation + modest yield</td>
+          </tr>
+          <tr>
+            <td>ETH/Stablecoin</td>
+            <td>ETH/USDC, ETH/DAI</td>
+            <td class="warn">Medium</td>
+            <td class="ok">High (deep volume)</td>
+            <td>Balanced exposure with significant fee income</td>
+          </tr>
+          <tr class="hi">
+            <td>ETH/BSX, BSX pairs</td>
+            <td>ETH/BSX</td>
+            <td class="warn">Medium-High</td>
+            <td class="ok">High + farm APR</td>
+            <td>BSX believers wanting maximum protocol exposure</td>
+          </tr>
+          <tr>
+            <td>Alt/Alt pairs</td>
+            <td>New Base tokens</td>
+            <td class="err">Very High</td>
+            <td class="warn">Variable</td>
+            <td>Experienced LPs only — high risk, high reward</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- BSX TOKEN -->
+  <section class="card" id="bsx">
+    <h2>BSX Token: Utility, Emissions, and Governance</h2>
+    <p>
+      <strong>BSX</strong> is BaseSwap's native governance and incentive token —
+      emitted to liquidity providers through the farm programme and convertible
+      to xBSX for revenue-share participation.
+    </p>
+
+    <div class="table-wrap">
+      <table aria-label="BSX token utility">
+        <thead>
+          <tr><th>Function</th><th>How BSX is used</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Farm emissions</td>
+            <td>BSX is distributed to LP token stakers in BaseSwap's yield farms — the primary distribution mechanism for new BSX supply</td>
+          </tr>
+          <tr>
+            <td>xBSX conversion</td>
+            <td>BSX can be converted 1:1 to xBSX — the revenue-share position — creating a long-term holding incentive</td>
+          </tr>
+          <tr class="hi">
+            <td>Governance</td>
+            <td>BSX holders vote on protocol parameters, new pool additions, emission allocations, and fee distribution settings</td>
+          </tr>
+          <tr>
+            <td>Liquidity provision</td>
+            <td>BSX/ETH is a core trading pair on BaseSwap — providing BSX-side liquidity earns enhanced farm rewards</td>
+          </tr>
+          <tr class="hi">
+            <td>Fee discount</td>
+            <td>Holding BSX qualifies traders for reduced swap fees on certain routes — rewarding active community members</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- BSX tokenomics -->
+    <div class="toko-bar" role="list" aria-label="BSX token distribution (indicative)">
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Liquidity mining / farms</span>
+        <div class="toko-track"><div class="toko-fill" style="width:60%"></div></div>
+        <span class="toko-val">~60%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Treasury / ecosystem</span>
+        <div class="toko-track"><div class="toko-fill" style="width:20%"></div></div>
+        <span class="toko-val">~20%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Team / development</span>
+        <div class="toko-track"><div class="toko-fill" style="width:15%"></div></div>
+        <span class="toko-val">~15%</span>
+      </div>
+      <div class="toko-row" role="listitem">
+        <span class="toko-label">Initial liquidity</span>
+        <div class="toko-track"><div class="toko-fill" style="width:5%"></div></div>
+        <span class="toko-val">~5%</span>
+      </div>
+    </div>
+    <p style="font-size:.88rem; color:var(--dim); margin-top:.6rem">Indicative distribution — verify exact figures in official BaseSwap documentation.</p>
+  </section>
+
+  <!-- xBSX -->
+  <section class="card" id="xbsx">
+    <h2>xBSX: Revenue-Share Staking and How It Generates Real Yield</h2>
+    <p>
+      <strong>xBSX</strong> is BaseSwap's revenue-share position — obtained by converting
+      BSX tokens at a 1:1 ratio. Unlike BSX which is tradeable, xBSX is non-transferable
+      and represents a committed long-term position in the protocol's fee revenue.
+    </p>
+
+    <div class="callout-grid">
+      <div class="mini">
+        <h3>How xBSX earns revenue</h3>
+        <p style="color:var(--muted)">A portion of every swap fee on BaseSwap (the 0.08% protocol fee component) flows to the xBSX pool and is distributed proportionally to all xBSX holders. As BaseSwap's trading volume grows, xBSX holders earn more — directly aligned with platform success. Revenue is distributed in ETH or stablecoins, not BSX.</p>
+        <div class="kpi-badges"><span>Real ETH/stablecoin yield</span><span>Volume-linked</span><span>0.08% fee share</span></div>
+      </div>
+      <div class="mini">
+        <h3>Converting BSX to xBSX and back</h3>
+        <p style="color:var(--muted)">Converting BSX to xBSX is done at 1:1 and is straightforward. Converting back (xBSX → BSX) involves a vesting period or penalty — the protocol discourages short-term xBSX positions to align holders with long-term platform growth. Check current conversion terms in the official BaseSwap app.</p>
+        <div class="kpi-badges"><span>1:1 conversion in</span><span>Vesting/penalty out</span><span>Long-term aligned</span></div>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>xBSX vs BSX farming:</strong> Farming BSX in pools gives you additional BSX
+      continuously — which you can hold, sell, or convert to xBSX.
+      Holding xBSX gives you real yield from trading fees — no additional action required.
+      For long-term participants who believe in BaseSwap's volume growth,
+      converting a portion of farmed BSX to xBSX creates a compounding revenue-share position.
+    </div>
+  </section>
+
+  <!-- FARMS -->
+  <section class="card" id="farms">
+    <h2>Yield Farms on BaseSwap: Amplifying LP Returns with BSX Emissions</h2>
+    <p>
+      BaseSwap's yield farms allow LP token holders to stake their pool positions
+      to earn additional <strong>BSX emissions</strong> on top of trading fee income —
+      creating a dual-revenue LP strategy.
+    </p>
+
+    <div class="table-wrap">
+      <table aria-label="Farm mechanics">
+        <thead>
+          <tr><th>Step</th><th>Action</th><th>Result</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>1. Add liquidity</td>
+            <td>Deposit token pair into a BaseSwap pool</td>
+            <td>Receive LP tokens representing your pool share</td>
+          </tr>
+          <tr>
+            <td>2. Stake LP tokens</td>
+            <td>Deposit LP tokens into the matching farm on BaseSwap</td>
+            <td>LP tokens locked in farm contract; BSX rewards begin accruing</td>
+          </tr>
+          <tr class="hi">
+            <td>3. Earn dual yield</td>
+            <td>Underlying pool earns trading fees; farm earns BSX emissions</td>
+            <td>Combined APR = trading fee APR + BSX farm APR</td>
+          </tr>
+          <tr>
+            <td>4. Claim and compound</td>
+            <td>Claim BSX rewards from farm; convert to xBSX or re-deploy</td>
+            <td>Additional yield layer on top of base LP income</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>Farm APR sustainability:</strong> High farm APRs are driven by BSX emission rates —
+      which dilute BSX holders over time. As Base Chain matures and swap volume grows,
+      the transition from emission-driven APR to fee-driven APR becomes critical.
+      Evaluate farms not just by current headline APR but by the underlying pool's
+      organic trading volume, which determines long-term fee income.
+    </div>
+  </section>
+
+  <!-- BASE CHAIN -->
+  <section class="card" id="base-chain">
+    <h2>Base Chain Overview: Why It Matters for DeFi and BaseSwap's Advantage</h2>
+    <p>
+      <strong>Base</strong> is an Ethereum Layer 2 rollup built by Coinbase using the OP Stack —
+      the same technology that powers Optimism. It is EVM-equivalent, meaning every Ethereum
+      smart contract and tool works on Base without modification.
+    </p>
+
+    <div class="table-wrap">
+      <table aria-label="Base Chain key properties">
+        <thead>
+          <tr><th>Property</th><th>Base Chain</th><th>Ethereum Mainnet</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Transaction fees</td>
+            <td class="ok">Sub-cent — typically $0.001–$0.01</td>
+            <td class="err">$1–$50+ during congestion</td>
+          </tr>
+          <tr>
+            <td>Block time</td>
+            <td class="ok">~2 seconds</td>
+            <td class="warn">~12 seconds</td>
+          </tr>
+          <tr class="hi">
+            <td>Security model</td>
+            <td class="ok">Ethereum-backed rollup security</td>
+            <td class="ok">Native Ethereum PoS</td>
+          </tr>
+          <tr>
+            <td>EVM compatibility</td>
+            <td class="ok">Full EVM equivalence</td>
+            <td class="ok">Native</td>
+          </tr>
+          <tr class="hi">
+            <td>Coinbase integration</td>
+            <td class="ok">Native onramp via Coinbase Wallet</td>
+            <td class="warn">Via third-party onramps</td>
+          </tr>
+          <tr>
+            <td>Bridge</td>
+            <td class="ok">Official Base bridge (7-day optimistic withdrawal)</td>
+            <td class="warn">Not applicable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <strong>The official bridge withdrawal delay:</strong> Withdrawing ETH from Base back
+      to Ethereum mainnet via the official bridge takes 7 days (the optimistic rollup
+      challenge period). For faster exits, use a third-party bridge (Bungee, Stargate)
+      which provides liquidity-backed instant withdrawals at a small fee.
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section class="card" id="safety">
+    <h2>BaseSwap Security and DeFi Risks</h2>
+
+    <div class="table-wrap">
+      <table aria-label="Risk analysis">
+        <thead>
+          <tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>Smart-contract exploit</td>
+            <td class="warn">Medium</td>
+            <td>Audited contracts; Base's rollup architecture adds an additional security layer; bug bounty programme</td>
+          </tr>
+          <tr>
+            <td>Impermanent loss (LPs)</td>
+            <td class="warn">Medium-High (volatile pairs)</td>
+            <td>Choose pool type based on your volatility tolerance; stable pairs minimise IL</td>
+          </tr>
+          <tr class="hi">
+            <td>BSX emission dilution</td>
+            <td class="warn">Medium</td>
+            <td>Monitor BSX emission schedule; evaluate pools by organic fee volume, not just headline APR</td>
+          </tr>
+          <tr>
+            <td>Base bridge withdrawal delay</td>
+            <td class="warn">Low (inconvenience risk)</td>
+            <td>Use third-party bridges for fast exits; plan liquidity around the 7-day official bridge window</td>
+          </tr>
+          <tr class="hi">
+            <td>New token rug pulls on Base</td>
+            <td class="warn">Medium</td>
+            <td>Verify any Base token via BaseScan before swapping; use TokenSniffer for new/unknown tokens</td>
+          </tr>
+          <tr>
+            <td>Phishing / fake BaseSwap sites</td>
+            <td class="err">High (user-controlled)</td>
+            <td>Bookmark the official BaseSwap URL; verify domain before every wallet connection</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="card" id="comparison">
+    <h2>BaseSwap vs Uniswap on Base vs Aerodrome: Base DEX Comparison</h2>
+
+    <div class="table-wrap">
+      <table aria-label="Base DEX comparison">
+        <thead>
+          <tr><th>Feature</th><th>BaseSwap</th><th>Uniswap V3 on Base</th><th>Aerodrome</th><th>SushiSwap on Base</th></tr>
+        </thead>
+        <tbody>
+          <tr class="hi">
+            <td>AMM model</td>
+            <td>V2 + V3 style</td>
+            <td>V3 concentrated liquidity</td>
+            <td>ve(3,3) model</td>
+            <td>V2 + Trident</td>
+          </tr>
+          <tr>
+            <td>Native to Base</td>
+            <td class="ok">Yes — first-mover</td>
+            <td class="warn">No — deployed from Ethereum</td>
+            <td class="ok">Yes — Base-native</td>
+            <td class="warn">No — multi-chain</td>
+          </tr>
+          <tr class="hi">
+            <td>Yield farming</td>
+            <td class="ok">Yes — BSX farms</td>
+            <td class="err">No native farming</td>
+            <td class="ok">Yes — AERO emissions + veAERO</td>
+            <td class="warn">Limited</td>
+          </tr>
+          <tr>
+            <td>Revenue share token</td>
+            <td class="ok">xBSX</td>
+            <td class="err">None</td>
+            <td class="ok">veAERO</td>
+            <td class="warn">xSUSHI (limited)</td>
+          </tr>
+          <tr class="hi">
+            <td>Liquidity depth (major pairs)</td>
+            <td class="warn">Good</td>
+            <td class="ok">Deepest (brand trust + TVL)</td>
+            <td class="ok">Deep and growing</td>
+            <td class="warn">Moderate</td>
+          </tr>
+          <tr>
+            <td>LP experience (new users)</td>
+            <td class="ok">Simple V2 interface</td>
+            <td class="warn">V3 requires range management</td>
+            <td class="warn">ve(3,3) is complex</td>
+            <td class="ok">Simple</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note" style="margin-top:1rem">
+      <strong>When to choose BaseSwap:</strong> Simpler LP experience (V2-style full-range),
+      BSX/xBSX yield stacking for Base-native token exposure, and first-mover liquidity depth
+      for Base ecosystem tokens not yet listed on Uniswap or Aerodrome.
+      Aerodrome has emerged as the ve(3,3) leader on Base for sophisticated liquidity providers;
+      Uniswap V3 offers deepest liquidity for major pairs.
+      BaseSwap serves as the most accessible entry point for newer DeFi participants.
+    </div>
+  </section>
+
+  <!-- BEST PRACTICES -->
+  <section class="card" id="best-practices">
+    <h2>Best Practices for BaseSwap Traders and Liquidity Providers</h2>
+    <ul style="padding-left:1.2rem">
+      <li style="margin-bottom:.5rem"><strong>Always keep a small ETH buffer on Base</strong> — transactions cost fractions of a cent but require ETH for gas. If you swap all ETH to another token, you can't execute any further transactions. Start by swapping 90% of your ETH, keeping 10% for gas.</li>
+      <li style="margin-bottom:.5rem"><strong>Verify new Base tokens on BaseScan</strong> before swapping — Base's low fees attract many new token launches, including scams. Check the token's contract verification, holder distribution, and LP lock status before any purchase.</li>
+      <li style="margin-bottom:.5rem"><strong>For LP: choose pools with organic volume</strong> — high-APR pools driven purely by BSX emissions will see APR compress as emissions decrease. Pools with genuine underlying trading volume generate sustainable fee income regardless of emission rates.</li>
+      <li style="margin-bottom:.5rem"><strong>Understand IL before entering volatile pools</strong> — use an IL calculator (daily.dev, APY.vision) to model impermanent loss scenarios before committing capital to volatile pairs. The BSX farm APR must exceed IL to be net positive.</li>
+      <li style="margin-bottom:.5rem"><strong>Convert a portion of farmed BSX to xBSX</strong> for long-term participation — rather than selling all farmed BSX, convert a meaningful portion to xBSX to accumulate a growing real-yield position as BaseSwap's volume compounds.</li>
+      <li style="margin-bottom:.5rem"><strong>Use the official Base bridge for large withdrawals, third-party for speed</strong> — for withdrawals back to Ethereum mainnet, the official bridge is most secure but takes 7 days. Third-party bridges are faster but add trust assumptions.</li>
+      <li><strong>Bookmark baseswap.fi and verify the domain</strong> before every session — DEX phishing is common across all chains. The Base ecosystem is no exception.</li>
+    </ul>
+  </section>
+
+  <!-- TROUBLESHOOTING -->
+  <section class="card" id="troubleshooting">
+    <h2>Troubleshooting BaseSwap: Swap Failures, Missing LP Tokens, and Farm Issues</h2>
+
+    <h3>"My swap failed on BaseSwap"</h3>
+    <ul style="padding-left:1.2rem">
+      <li>Check BaseScan for the failed transaction — the revert reason indicates the cause. Common failures: slippage exceeded (price moved during block confirmation — increase slippage tolerance), insufficient ETH for gas, or a token with a built-in tax exceeding your slippage setting.</li>
+      <li>For tokens with buy/sell taxes, set slippage to at least the tax percentage + 1%. A 5% tax token requires at least 6% slippage to execute successfully.</li>
+    </ul>
+
+    <h3>"My LP tokens aren't showing after adding liquidity"</h3>
+    <ul style="padding-left:1.2rem">
+      <li>Verify the liquidity transaction succeeded on BaseScan. If confirmed, the LP tokens are in your wallet but may not display automatically.</li>
+      <li>Import the LP token contract address manually into your wallet. The LP token contract address is available in the pool interface or by searching the token pair on BaseScan.</li>
+      <li>If you staked LP tokens in a farm immediately after receiving them, they'll be held by the farm contract — not in your wallet directly. Check your farm positions in the BaseSwap Farm section.</li>
+    </ul>
+
+    <h3>"I can't see my BSX farm rewards"</h3>
+    <ul style="padding-left:1.2rem">
+      <li>Ensure your LP tokens are actually staked in the farm — depositing liquidity doesn't automatically stake in the farm. You must separately deposit your LP tokens into the farm contract from the Farms page.</li>
+      <li>Farm rewards accrue in real time but may take a few blocks to update in the UI. Refresh the page and ensure you're connected with the correct wallet address on Base.</li>
+    </ul>
+
+    <div class="note">
+      <strong>BaseScan is ground truth:</strong> For any BaseSwap transaction query,
+      confirm the on-chain status at basescan.org with your wallet address or transaction hash
+      before contacting support. The UI may occasionally lag on-chain state during high activity.
+    </div>
+  </section>
+
+  <!-- EEAT -->
+  <section class="eeat" id="eeat" aria-labelledby="eeat-title">
+    <h2 id="eeat-title">BaseSwap: Authoritative References &amp; External Sources</h2>
+
+    <h3>BaseSwap — Official Sources</h3>
+    <ul style="padding-left:1.2rem">
+      <li><a href="https://baseswap.fi/" target="_blank" rel="noopener nofollow">BaseSwap — Official DEX App</a></li>
+      <li><a href="https://docs.baseswap.fi/" target="_blank" rel="noopener nofollow">BaseSwap — Official Documentation</a></li>
+      <li><a href="https://github.com/baseswapfi" target="_blank" rel="noopener nofollow">BaseSwap — Smart Contracts (GitHub)</a></li>
+    </ul>
+
+    <h3>Base Chain — Official Sources</h3>
+    <ul style="padding-left:1.2rem">
+      <li><a href="https://base.org/" target="_blank" rel="noopener nofollow">Base — Official Website</a></li>
+      <li><a href="https://docs.base.org/" target="_blank" rel="noopener nofollow">Base — Official Documentation</a></li>
+      <li><a href="https://bridge.base.org/" target="_blank" rel="noopener nofollow">Base — Official Bridge</a></li>
+      <li><a href="https://basescan.org/" target="_blank" rel="noopener nofollow">BaseScan — Base Chain Block Explorer</a></li>
+    </ul>
+
+    <h3>DeFi Data &amp; Tools</h3>
+    <ul style="padding-left:1.2rem">
+      <li><a href="https://defillama.com/chain/Base" target="_blank" rel="noopener nofollow">DeFiLlama — Base Chain TVL &amp; Protocol Data</a></li>
+      <li><a href="https://chainlist.org/" target="_blank" rel="noopener nofollow">Chainlist — Add Base Network to Your Wallet</a></li>
+      <li><a href="https://revoke.cash/" target="_blank" rel="noopener nofollow">Revoke.cash — Token Approval Manager</a></li>
+    </ul>
+
+    <div class="note" style="margin-top:1.2rem">
+      <strong>About:</strong> Prepared by Crypto Finance Experts as a practical, SEO-oriented knowledge base for
+      <em>BaseSwap</em>: AMM mechanics, token swapping on Base Chain, liquidity provision, BSX/xBSX tokens, yield farms, Base Chain overview, security, and troubleshooting.
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="card" id="faq" aria-labelledby="faq-title">
+    <h2 id="faq-title" style="margin-top:0;border-top:none;padding-top:0">BaseSwap: Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f1" id="b1">
+        <h3>What is BaseSwap and what chain does it run on?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f1" class="faq-content" role="region" aria-labelledby="b1">
+        <p>BaseSwap is a decentralised exchange (DEX) and yield platform built natively on Base — Coinbase's Ethereum Layer 2 rollup. It launched as one of the first major DEXs on Base, offering token swaps via an AMM model, liquidity pools, yield farms, and the BSX/xBSX dual-token system. Base Chain combines Ethereum security with sub-cent transaction fees and 2-second block times, making DeFi activities like swapping and LP management economically viable at any position size.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f2" id="b2">
+        <h3>How do I get started on BaseSwap if I'm new to Base Chain?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f2" class="faq-content" role="region" aria-labelledby="b2">
+        <p>Add the Base network to your wallet via Chainlist.org (search "Base"). Bridge ETH from Ethereum mainnet to Base using the official Base bridge or a cross-chain aggregator — the official bridge takes ~20 minutes. Once you have ETH on Base, connect to BaseSwap, and you can immediately start swapping tokens or providing liquidity. Keep a small ETH buffer for gas costs (fractions of a cent per transaction on Base).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f3" id="b3">
+        <h3>What is the difference between BSX and xBSX?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f3" class="faq-content" role="region" aria-labelledby="b3">
+        <p>BSX is BaseSwap's tradeable governance and incentive token — distributed to LP stakers through yield farms and usable for governance votes. xBSX is the non-transferable revenue-share position obtained by converting BSX 1:1. xBSX holders earn a proportional share of BaseSwap's protocol fee revenue (0.08% of every swap) distributed in ETH or stablecoins. Converting back from xBSX to BSX involves a vesting period or penalty to discourage short-term positions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f4" id="b4">
+        <h3>What are BaseSwap yield farms and how do I use them?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f4" class="faq-content" role="region" aria-labelledby="b4">
+        <p>Yield farms let you stake your BaseSwap LP tokens to earn additional BSX emissions on top of trading fee income. The process: add liquidity to a pool → receive LP tokens → go to the Farms section → stake your LP tokens in the matching farm → earn BSX rewards continuously. You can claim BSX rewards at any time, then hold, sell, or convert them to xBSX. Farm APRs fluctuate based on BSX price and emission rates.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f5" id="b5">
+        <h3>How long does it take to withdraw ETH from Base back to Ethereum?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f5" class="faq-content" role="region" aria-labelledby="b5">
+        <p>The official Base bridge withdrawal to Ethereum mainnet takes 7 days — this is the optimistic rollup challenge period where fraud proofs can be submitted. For faster withdrawals, use a third-party bridge like Bungee, Stargate, or Across, which provide instant or near-instant withdrawals by fronting the liquidity and settling later. Third-party bridges charge a small fee for this service but are safe and widely used for time-sensitive Base-to-Ethereum transfers.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f6" id="b6">
+        <h3>What is impermanent loss and should I worry about it on BaseSwap?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f6" class="faq-content" role="region" aria-labelledby="b6">
+        <p>Impermanent loss (IL) occurs when the price ratio between your two pooled tokens changes after you've added liquidity — you'd have been better off just holding them. For stable pairs (USDC/USDT), IL is minimal because the prices rarely diverge. For volatile pairs (ETH/new token), IL can be significant. On BaseSwap, the combination of trading fees plus BSX farm rewards is designed to offset IL — but in high-volatility conditions, IL can exceed combined rewards. Always model IL scenarios before entering volatile pools.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f7" id="b7">
+        <h3>How does BaseSwap compare to Aerodrome on Base?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f7" class="faq-content" role="region" aria-labelledby="b7">
+        <p>Aerodrome uses a ve(3,3) governance model where veAERO holders control emission direction through gauge votes — similar to Curve/Convex on Ethereum. This is powerful for liquidity protocols competing for emissions but complex for individual LPs. BaseSwap uses a simpler BSX/xBSX model that's more accessible for DeFi newcomers. Aerodrome has grown to command larger TVL on Base; BaseSwap maintains a loyal user base for its simpler interface and native ecosystem positioning. For new LPs, BaseSwap is more approachable; for sophisticated yield strategies, Aerodrome offers more control.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f8" id="b8">
+        <h3>Is Base Chain safe to use for DeFi?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f8" class="faq-content" role="region" aria-labelledby="b8">
+        <p>Base inherits Ethereum's security through its rollup architecture — transaction data is posted to Ethereum mainnet, and the chain's security ultimately relies on Ethereum validators. The OP Stack (which Base uses) is battle-tested through Optimism. Coinbase's involvement adds institutional credibility and development resources. However, Base is still relatively young, and like all L2s, carries additional trust assumptions compared to Ethereum mainnet — specifically around the sequencer and fraud proof system. For DeFi users, Base is considered a reputable, lower-risk L2 environment.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-button" aria-expanded="false" aria-controls="f9" id="b9">
+        <h3>Can I use MetaMask with BaseSwap?</h3><span class="faq-plus">+</span>
+      </button>
+      <div id="f9" class="faq-content" role="region" aria-labelledby="b9">
+        <p>Yes — MetaMask supports Base natively and is one of the most popular wallets for BaseSwap. Add the Base network to MetaMask either manually (Network Name: Base, RPC: https://mainnet.base.org, Chain ID: 8453, Symbol: ETH, Explorer: https://basescan.org) or via one click through Chainlist.org. Coinbase Wallet also works seamlessly with Base given Coinbase's direct involvement in the chain. Any EVM-compatible wallet can be configured for Base.</p>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<footer class="container" role="contentinfo" style="padding:2.5rem 0; border-top:1px solid var(--line); margin-top:2rem">
+  <p style="color:var(--dim); font-size:.93rem">© 2026 BaseSwap Guide. Educational content with a security-first operational focus. Not financial advice.</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-button').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        const c = document.getElementById(b.getAttribute('aria-controls'));
+        c.classList.remove('open'); c.style.maxHeight = '0';
+      });
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        const content = document.getElementById(btn.getAttribute('aria-controls'));
+        content.classList.add('open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
